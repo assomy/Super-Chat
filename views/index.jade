@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  p Hold down the mouse button to draw below.
+  div(id='container')
+    canvas(id="imageView", width="400", height="300")
+      p Your broswer Doesn't support canvas.
+  script(type="text/javascript", src="js/canvas.js")
+  script(type="text/javascript", src="socket.io/socket.io.js")
+  script(type="text/javascript")
+    var socket = io.connect();
+
+    socket.on('beginDrawingAt', function(obj){
+      canv.drawStart(obj.x, obj.y);
+    });
+
+    socket.on('drawTo', function(obj){
+      canv.drawing(obj.x, obj.y);
+    });
